@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+.post-text{
+  color: white;
+  background-color: black;
+}
+</style>
+
+  <h2>Thank you for visiting us</h2>
+  <small class="mb-4"> <a href="{% url 'login' %}">Login</a></small>
+  
+{% endblock content %}

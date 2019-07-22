@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+.post-text{
+  color: white;
+  background-color: black;
+}
+</style>
+
+  <form action="" method="post" class="mb-2"> {% csrf_token %}
+      {{form|crispy}}
+      <button type="submit" class="btn btn-success">Register</button>
+  </form>
+  <small class="mb-4">Dont have an account? <a href="{% url 'login' %}">Login</a></small>
+  
+{% endblock content %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+.post-text{
+  color: white;
+  background-color: black;
+}
+</style>
+<div class="card mb-4">
+    <div class="card-body post-text">
+      <!-- <h2 class="card-title">Post Title</h2> -->
+      
+      <strong><p class="card-text">{{post.text}}</p></strong>
+      <!-- <a href="#" class="btn btn-link">Read More &rarr;</a> -->
+  
+    </div>
+  
+  
+    <div class="card-footer text-muted">
+        <small>
+            Posted&nbsp;{{post.created_at|timesince}} Ago by
+            <a href="#">{{post.user}}</a>
+        </small>
+        
+         
+          <span class="float-right mr-4"> {{post.likes.count}} 
+                {% if request.user in post.likes.all %}
+                <a href="{% url 'like_post' post.pk %}"><i class="far fa-thumbs-up"></i> Unlike</a>
+                {% else %}
+                  {% if request.user.is_authenticated %}
+                  <a href="{% url 'like_post' post.pk %}"><i class="fas fa-thumbs-up"></i> Like</a>
+                  {% else %}
+                  <a href="{% url 'login'  %}"><i class="fas fa-thumbs-up"></i> Like</a>
+                  {% endif %}
+                {% endif %}
+          </span>
+          <span class="float-right">
+              
+          </span>
+          
+      </div>
+  </div>
+  <hr>
+  <h4><i class="fas fa-comment-alt "></i> Comments</h4>
+  <hr>
+  <form action="" method="post" class="mb-4"> {% csrf_token %}
+      {{form|crispy}}
+      <button type="submit" class="btn btn-success">Comment</button>
+  </form>
+  {% for comment in post.comment_set.all %}
+  <blockquote class="blockquote">
+        <p class="mb-0">{{comment.comment}}</p>
+
+        <a class="blockquote-footer">{{comment.commenter}} </a>
+    </blockquote>
+  {% endfor %}
+{% endblock content %}
